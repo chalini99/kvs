@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+</head>
+<body>
+    <h1>Register Student</h1>
+    <form method="post">
+         Name: <input type="text" name="name" required><br>
+        Father Name: <input type="text" name="father_name"><br>
+        DOB: <input type="date" name="dob"><br>
+        Class: <input type="text" name="class"><br>
+        Academy Join (Duration): <input type="text" name="academy_join"><br>
+        Contact: <input type="text" name="contact" required><br>
+        Sport: <input type="text" name="sport" value="Kabaddi" required><br>
+        <input type="submit" value="Register">
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
+<!-- Add this where you want the message to appear -->
+{% if message %}
+    <p style="color:green;">{{ message }}</p>
+{% endif %}
