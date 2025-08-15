@@ -1,16 +1,18 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #0f1821f5;
-    color: white;
-}
-
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
 /* Main Container */
+
 .main-container {
     height: 100vh;
     width: 100vw;
@@ -27,14 +29,13 @@ body {
     top: 0;
     z-index: 1000;
     width: 100vw;
-    height: 13vh;
     gap: 20px; /* Space between elements */
 }
 
 /* Logo at left */
 #log-img {
-    width: 7vw;
-    height: 11vh;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
@@ -45,6 +46,7 @@ body {
     width: 100%;
     height: 100%;
 }
+
 
 /* Title */
 .title {
@@ -62,6 +64,11 @@ body {
 }
 
 /* Nav Links */
+nav {
+    display: flex;
+    gap: 10px;
+}
+
 .nav-link {
     display: flex;
     gap: 30px;
@@ -69,14 +76,17 @@ body {
 }
 
 .nav-link a {
-    text-decoration: none;
     color: #fff;
-    font-weight: 900;
-    transition: 0.3s ease;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px 8px;
+    transition: 0.3s;
 }
 
 .nav-link a:hover {
-    color: #facc15;
+    background: #facc15;
+    color: #222;
+    border-radius: 4px;
 }
 
 /* Menu Button (Hidden on Desktop) */

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
-<body>
+<body> 
 <header> 
     <div class="main-container">
         <div class="heading">
@@ -26,10 +26,9 @@
                 <a href="{{ url_for('about') }}">About Us</a>
                 <a href="{{ url_for('admission') }}">Admission</a>
                 <a href="{{ url_for('contact') }}">Contact Us</a>
-                <a href="{{ url_for('login') }}">Registration/Login</a>
-                <a href="{{ url_for('dashboard') }}">Dashboard</a> |
-                <a href="{{ url_for('registration') }}">Register</a> |
-                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a> 
+                <a href="{{ url_for('registration') }}">Register</a> 
+                <!-- <a href="{{ url_for('login') }}">Login</a> -->
             </nav>
                 
             </div>
@@ -40,17 +39,18 @@
                 <i class="ri-close-line"></i>
             </div>
             <ul>
-                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                <li><a href="{{ url_for('registration') }}">Register</a></li>
                 <li><a href="{{ url_for('about') }}">About Us</a></li>
                 <li><a href="{{ url_for('sports') }}">Sports</a></li>
                 <li><a href="{{ url_for('admission') }}">Admission</a></li>
                 <li><a href="{{ url_for('achievements') }}">Achievements</a></li>
                 <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-                <li><a href="{{ url_for('appointment') }}">Book An Appointment</a></li>
             </ul>
         </div>
     </div>
 </header>
+
+
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

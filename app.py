@@ -1,6 +1,7 @@
-from flask import Flask, render_template
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import csv
+import os
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -28,7 +29,7 @@ def dashboard():
             for row in reader:
                 students.append(row)
     except FileNotFoundError:
-        pass  # Or you can set a message to show on the dashboard
+        pass
     return render_template('dashboard.html', students=students)
 
 @app.route('/contact')
@@ -40,15 +41,17 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        # Add authentication logic here
         return jsonify({'message': 'Login attempted', 'username': username})
     return render_template('login.html')
 
-import os
-
+# ==============================
+# New merged Registration + Payment
+# ==============================
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == 'POST':
+        data = request.get_json()
+
         # Find the next S.No
         sno = 1
         if os.path.exists('data/students.csv'):
@@ -60,23 +63,27 @@ def registration():
 
         student = {
             'S.No': str(sno),
-            'Name': request.form.get('name'),
-            'Father Name': request.form.get('father_name'),
-            'DOB': request.form.get('dob'),
-            'Class': request.form.get('class'),
-            'Academy Join': request.form.get('academy_join'),
-            'Mobile No.': request.form.get('contact')
+            'Name': data.get('name'),
+            'Father Name': data.get('father_name'),
+            'DOB': data.get('dob'),
+            'Class': data.get('class'),
+            'Academy Join': data.get('academy_join'),
+            'Mobile No.': data.get('contact'),
+            'Payment ID': data.get('payment_id')
         }
+
         os.makedirs('data', exist_ok=True)
         file_exists = os.path.isfile('data/students.csv')
         with open('data/students.csv', 'a', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['S.No', 'Name', 'Father Name', 'DOB', 'Class', 'Academy Join', 'Mobile No.']
+            fieldnames = ['S.No', 'Name', 'Father Name', 'DOB', 'Class', 'Academy Join', 'Mobile No.', 'Payment ID']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             if not file_exists:
                 writer.writeheader()
             writer.writerow(student)
-        return render_template('registration.html', message="Registration successful!")
-    return render_template('registration.html')
+
+        return jsonify({'status': 'success', 'message': 'Registered and payment saved.'})
+
+    return render_template('registration_payment.html')
 
 @app.route('/edit/<sno>', methods=['GET', 'POST'])
 def edit_student(sno):
@@ -96,9 +103,8 @@ def edit_student(sno):
         student['Class'] = request.form.get('class')
         student['Academy Join'] = request.form.get('academy_join')
         student['Mobile No.'] = request.form.get('contact')
-        # Write all students back to CSV
         with open('data/students.csv', 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['S.No', 'Name', 'Father Name', 'DOB', 'Class', 'Academy Join', 'Mobile No.']
+            fieldnames = ['S.No', 'Name', 'Father Name', 'DOB', 'Class', 'Academy Join', 'Mobile No.', 'Payment ID']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(students)
@@ -114,7 +120,7 @@ def delete_student(sno):
             students.append(row)
     students = [s for s in students if s['S.No'] != sno]
     with open('data/students.csv', 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['S.No', 'Name', 'Father Name', 'DOB', 'Class', 'Academy Join', 'Mobile No.']
+        fieldnames = ['S.No', 'Name', 'Father Name', 'DOB', 'Class', 'Academy Join', 'Mobile No.', 'Payment ID']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(students)
@@ -131,5 +137,6 @@ def achievements():
 @app.route('/appointment')
 def appointment():
     return render_template('appointment.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
