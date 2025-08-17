@@ -12,26 +12,88 @@
             mobileMenu.classList.remove('open');
         });
 }
-// Mobile Display Menu Section end
-const toggleButton = document.getElementById('darkModeToggle');
+
+
+// // Dark Mode Toggle Section Start for desktop and phone
+{
+
+// Dark Mode Toggle (works for both desktop & mobile)
+
+// Get desktop & mobile toggle buttons
+const desktopToggle = document.getElementById('darkModeToggle');
+const mobileToggle = document.getElementById('darkModeToggleMobile');
+
+// Save original button content
+const originalDesktopContent = desktopToggle ? desktopToggle.innerHTML : '';
+const originalMobileContent = mobileToggle ? mobileToggle.innerHTML : '';
 
 // Check localStorage on page load
 if (localStorage.getItem('darkMode') === 'enabled') {
     document.body.classList.add('dark-mode');
-    toggleButton.textContent = '☀ Light Mode';
+    if (desktopToggle) desktopToggle.innerHTML = '☀ Light Mode';
+    if (mobileToggle) mobileToggle.innerHTML = '<span>☀ Light Mode</span>';
 }
 
-// Toggle dark mode on button click
-toggleButton.addEventListener('click', () => {
+// Function to toggle dark mode
+function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 
-    if(document.body.classList.contains('dark-mode')){
+    if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('darkMode', 'enabled');
-        toggleButton.textContent = '☀ Light Mode';
+        if (desktopToggle) desktopToggle.innerHTML = '☀ Light Mode';
+        if (mobileToggle) mobileToggle.innerHTML = '<span>☀ Light Mode</span>';
     } else {
         localStorage.setItem('darkMode', 'disabled');
-        toggleButton.textContent = '🌙 Dark Mode';
+        if (desktopToggle) desktopToggle.innerHTML = originalDesktopContent;
+        if (mobileToggle) mobileToggle.innerHTML = originalMobileContent;
     }
+}
+
+// Add event listeners
+if (desktopToggle) desktopToggle.addEventListener('click', toggleDarkMode);
+if (mobileToggle) mobileToggle.addEventListener('click', toggleDarkMode);
+
+
+}
+
+// home page 
+ // Hero Slider Auto Change
+{
+// home page 
+ // Hero Slider Auto Change
+let currentSlide = 0;
+const slides = document.querySelectorAll(".hero-slider img");
+
+function changeSlide() {
+  slides.forEach((slide, index) => {
+    slide.classList.remove("active");
+    if (index === currentSlide) {
+      slide.classList.add("active");
+    }
+  });
+
+  currentSlide = (currentSlide + 1) % slides.length;
+}
+
+const track = document.querySelector(".carousel-track");
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
+
+let index = 0;
+const imgWidth = 270; // image width + margin
+
+nextBtn.addEventListener("click", () => {
+  if (index < track.children.length - 1) {
+    index++;
+    track.style.transform = `translateX(-${index * imgWidth}px)`;
+  }
 });
 
+prevBtn.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+    track.style.transform = `translateX(-${index * imgWidth}px)`;
+  }
+});
 
+}

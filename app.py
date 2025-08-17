@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import csv
 import os
-
+ 
 app = Flask(__name__)
 
 @app.route('/')
@@ -45,7 +45,7 @@ def login():
     return render_template('login.html')
 
 # ==============================
-# New merged Registration + Payment
+# New merged Registration+Payment
 # ==============================
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
